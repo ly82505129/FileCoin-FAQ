@@ -1,6 +1,49 @@
+---
+coverY: 0
+---
+
 # Venus-Market
 
 Dive into the specifics of each API endpoint by checking out our complete documentation.
+
+#### 配置相关问题：
+
+1.  若遇到`Too Many Files`的报错时，先设置如下命令：
+
+    ```
+    cat > /etc/security/limits.conf << EOF
+    * soft nofile 655350
+    * hard nofile 655360
+    * soft nproc 655350
+    * hard nproc 655350
+    root soft nofile 655350
+    root hard nofile 655360
+    root soft nproc 655350
+    root hard nproc 655350
+    EOF
+
+    cat >> /etc/sysctl.conf << EOF
+    net.ipv4.neigh.default.gc_thresh1 = 8192
+    net.ipv4.neigh.default.gc_thresh2 = 32768
+    net.ipv4.neigh.default.gc_thresh3 = 65536
+    EOF
+
+    sysctl -p
+    sed -i '/#DefaultLimitNOFILE=/a DefaultLimitNOFILE=655350' /etc/systemd/system.conf
+    sed -i '/#DefaultLimitNOFILE=/a DefaultLimitNOFILE=655350' /etc/systemd/user.conf
+    systemctl daemon-reexec
+    ```
+
+    \
+    通过`ps aux | grep venus` 检查 market 进程的id\
+
+2. 11
+
+
+
+
+
+
 
 ## Pets
 
