@@ -6,7 +6,7 @@ coverY: 0
 
 Dive into the specifics of each API endpoint by checking out our complete documentation.
 
-#### 配置相关问题：
+### 在使用Marlet过程中遇到的相关问题：
 
 1.  若遇到`Too Many Files`的报错时，先设置如下命令：
 
@@ -35,15 +35,16 @@ Dive into the specifics of each API endpoint by checking out our complete docume
     ```
 
     \
-    通过`ps aux | grep venus` 检查 market 进程的id\
-
-2. 11
-
-
-
-
-
-
+    通过`ps aux | grep venus` 检查 market 进程的id;\
+    通过`cat proc/<Market进程id>/limits` 查看market进程的limit中open files是否已设置成功；\
+    若未设置成功请重启market，使limitis生效即可。
+2. Venus Market 在几次运行过程无法接收远程发送的订单，检查多次也无法确定问题在哪里的情况下，最终的解决的方案是：\
+   ·删除.venusmarket/ 的目录，重新在venus-market目中./venus-market run,重新初始化，可以解决大部分遇到的问题。
+3. ​一般默认在编辑venus-market时会存放在系统盘，若系统盘目录空间不足时可能会导致诸多问题，此种情况下：\
+   ·初始化完成时，将.venusmarket/ 目录移动至磁盘空间充足的目录，启动makret时的命令：`nohup ./venus-market --repo=/<绝对路径>/.venusmarket run >>market.log 2>&1&`&#x20;
+4. 若移动了.venumarket的路径后，/venus-market目录下的相关命令的使用需使用如下命令：\
+   ·./venus-market --repo=/<绝对路径>/.venusmarket data-transfers list
+5.
 
 ## Pets
 
