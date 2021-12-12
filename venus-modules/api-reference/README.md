@@ -42,10 +42,14 @@ Dive into the specifics of each API endpoint by checking out our complete docume
 
 > 删除.venusmarket/ 的目录，重新在venus-market目中./venus-market run,重新初始化，可以解决大部分遇到的问题。
 
-* ​一般默认在编辑venus-market时会存放在系统盘，若系统盘目录空间不足时可能会导致诸多问题，此种情况下：\
-  ·初始化完成时，将.venusmarket/ 目录移动至磁盘空间充足的目录，启动makret时的命令：`nohup ./venus-market --repo=/<绝对路径>/.venusmarket run >>market.log 2>&1&`&#x20;
-* 若移动了.venumarket的路径后，/venus-market目录下的相关命令的使用需使用如下命令：\
-  ·./venus-market --repo=/<绝对路径>/.venusmarket data-transfers list
+* ​一般默认在编辑venus-market时会存放在系统盘，若系统盘目录空间不足时可能会导致诸多问题，此种情况下：
+
+> 初始化完成时，将.venusmarket/ 目录移动至磁盘空间充足的目录，启动makret时的命令：`nohup ./venus-market --repo=/<绝对路径>/.venusmarket run >>market.log 2>&1&`&#x20;
+
+* 若移动了.venumarket的路径后，/venus-market目录下的相关命令的使用需使用如下命令：
+
+> ./venus-market --repo=/<绝对路径>/.venusmarket data-transfers list
+
 *
 
 ## Pets
