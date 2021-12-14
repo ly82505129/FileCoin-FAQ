@@ -8,8 +8,8 @@
 
 Feeling like an eager beaver? Jump in to the quick start docs and get making your first request:
 
-{% content-ref url="venus-modules/quick-start.md" %}
-[quick-start.md](venus-modules/quick-start.md)
+{% content-ref url="venus-modules/quick-start/" %}
+[quick-start](venus-modules/quick-start/)
 {% endcontent-ref %}
 
 ## Want to deep dive?
