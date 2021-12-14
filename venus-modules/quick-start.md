@@ -1,154 +1,21 @@
+---
+description: 本页主要汇总近期Sealer遇到的各种问题
+---
+
 # Venus-Sealer
 
-{% hint style="info" %}
-**Good to know:** A quick start guide can be good to help folks get up and running with your API in a few steps. Some people prefer diving in with the basics rather than meticulously reading every page of documentation!
-{% endhint %}
+## Sealer 问题汇总：
 
-## Get your API keys
+* 近期遇到了一个问题，连续3天winpost（时空证明）没有验证通过，甚至DeclareFaultsRecovered的消息都没有发出来，第一天遇到这个问题的时候，重启了一次sealer，但是第二天依然如故，然后排查日志时怀疑是由于GPU被sectors C2占用导致时空证明无法完成，但是第三天依然如故，经过ops的仔细排查，最后发现由于websocket断开导致消息无法接收：
 
-Your API requests are authenticated using API keys. Any request that doesn't include an API key will return an error.
-
-You can generate an API key from your Dashboard at any time.
-
-## Install the library
-
-The best way to interact with our API is to use one of our official libraries:
-
-{% tabs %}
-{% tab title="Node" %}
-```
-# Install via NPM
-npm install --save my-api
-```
-{% endtab %}
-
-{% tab title="Python" %}
-```
-# Install via pip
-pip install --upgrade myapi
-```
-{% endtab %}
-
-{% tab title="Ubuntu" %}
-```
-cat > /etc/security/limits.conf << EOF
-* soft nofile 655350
-* hard nofile 655360
-* soft nproc 655350
-* hard nproc 655350
-root soft nofile 655350
-root hard nofile 655360
-root soft nproc 655350
-root hard nproc 655350
-EOF
-
-cat >> /etc/sysctl.conf << EOF
-net.ipv4.neigh.default.gc_thresh1 = 8192
-net.ipv4.neigh.default.gc_thresh2 = 32768
-net.ipv4.neigh.default.gc_thresh3 = 65536
-EOF
-
-sysctl -p
-sed -i '/#DefaultLimitNOFILE=/a DefaultLimitNOFILE=655350' /etc/systemd/system.conf
-sed -i '/#DefaultLimitNOFILE=/a DefaultLimitNOFILE=655350' /etc/systemd/user.conf
-systemctl daemon-reexec
-```
-{% endtab %}
-{% endtabs %}
+![saeler.log](../.gitbook/assets/image.png)
 
 {% hint style="info" %}
-**Good to know:** Using tabs to separate out different languages is a great way to present technical examples or code documentation without cramming your docs with extra sections or pages per language.
+**处理方案:**&#x20;
+
+现阶段只能通过重启sealer的方式来处理，希望venus增加重试机制
+
+通过命令和日志查看和判断 websocket connection closed是否断开了；
 {% endhint %}
 
-## Make your first request
-
-To make your first request, send an authenticated request to the pets endpoint. This will create a `pet`, which is nice.
-
-{% swagger baseUrl="https://api.myapi.com/v1" method="post" path="/pet" summary="Create pet." %}
-{% swagger-description %}
-Creates a new pet.
-{% endswagger-description %}
-
-{% swagger-parameter in="body" name="name" required="true" type="string" %}
-The name of the pet
-{% endswagger-parameter %}
-
-{% swagger-parameter in="body" name="owner_id" required="false" type="string" %}
-The
-
-`id`
-
-of the user who owns the pet
-{% endswagger-parameter %}
-
-{% swagger-parameter in="body" name="species" required="false" type="string" %}
-The species of the pet
-{% endswagger-parameter %}
-
-{% swagger-parameter in="body" name="breed" required="false" type="string" %}
-The breed of the pet
-{% endswagger-parameter %}
-
-{% swagger-response status="200" description="Pet successfully created" %}
-```javascript
-{
-    "name"="Wilson",
-    "owner": {
-        "id": "sha7891bikojbkreuy",
-        "name": "Samuel Passet",
-    "species": "Dog",}
-    "breed": "Golden Retriever",
-}
-```
-{% endswagger-response %}
-
-{% swagger-response status="401" description="Permission denied" %}
-
-{% endswagger-response %}
-{% endswagger %}
-
-{% hint style="info" %}
-**Good to know:** You can use the API Method block to fully document an API method. You can also sync your API blocks with an OpenAPI file or URL to auto-populate them.
-{% endhint %}
-
-Take a look at how you might call this method using our official libraries, or via `curl`:
-
-{% tabs %}
-{% tab title="curl" %}
-```
-curl https://api.myapi.com/v1/pet  
-    -u YOUR_API_KEY:  
-    -d name='Wilson'  
-    -d species='dog'  
-    -d owner_id='sha7891bikojbkreuy'  
-```
-{% endtab %}
-
-{% tab title="Node" %}
-```javascript
-// require the myapi module and set it up with your API key
-const myapi = require('myapi')(YOUR_API_KEY);
-
-const newPet = away myapi.pet.create({
-    name: 'Wilson',
-    owner_id: 'sha7891bikojbkreuy',
-    species: 'Dog',
-    breed: 'Golden Retriever',
-})
-```
-{% endtab %}
-
-{% tab title="Python" %}
-```python
-// Set your API key before making the request
-myapi.api_key = YOUR_API_KEY
-
-myapi.Pet.create(
-    name='Wilson',
-    owner_id='sha7891bikojbkreuy',
-    species='Dog',
-    breed='Golden Retriever',
-)
-```
-{% endtab %}
-{% endtabs %}
+##

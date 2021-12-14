@@ -4,9 +4,7 @@ coverY: 0
 
 # Venus-Market
 
-Dive into the specifics of each API endpoint by checking out our complete documentation.
-
-### 在使用Marlet过程中遇到的相关问题：
+### 在使用Market过程中遇到的相关问题：
 
 *   若遇到`Too Many Files`的报错时，先设置如下命令：
 
